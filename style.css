@@ -1,0 +1,380 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --forest-primary: #2e7d32;
+    --forest-secondary: #4caf50;
+    --forest-accent: #8bc34a;
+    
+    --ice-primary: #0277bd;
+    --ice-secondary: #03a9f4;
+    --ice-accent: #b3e5fc;
+    
+    --desert-primary: #e65100;
+    --desert-secondary: #ff9800;
+    --desert-accent: #ffcc80;
+    
+    --tech-primary: #303f9f;
+    --tech-secondary: #3f51b5;
+    --tech-accent: #c5cae9;
+    
+    --current-primary: var(--ice-primary);
+    --current-secondary: var(--ice-secondary);
+    --current-accent: var(--ice-accent);
+}
+
+body {
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-image: linear-gradient(to bottom, var(--current-primary), var(--current-secondary));
+    transition: background-image 0.5s ease;
+}
+
+.container {
+    max-width: 900px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--current-primary);
+    font-size: 2.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.game-header {
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.progress-bar {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--current-primary);
+    transition: width 0.3s ease;
+}
+
+.controls {
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.difficulty, .theme-selector, .mode-selector {
+    margin-bottom: 10px;
+}
+
+.difficulty label, .theme-selector label, .mode-selector label {
+    margin-right: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.difficulty select, .theme-selector select, .mode-selector select {
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: white;
+    color: #333;
+}
+
+button {
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: var(--current-primary);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: var(--current-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+#game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    perspective: 1000px;
+    margin-bottom: 20px;
+}
+
+.card {
+    height: 120px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.card.flipped {
+    transform: rotateY(180deg) scale(1.05);
+}
+
+.card.matched {
+    transform: rotateY(180deg);
+}
+
+.card.fire .card-front {
+    background: linear-gradient(45deg, #ff5722, #ff9800);
+    box-shadow: 0 0 15px 5px #ff5722;
+    animation: fire-glow 1.5s infinite alternate;
+}
+
+.card.ice .card-front {
+    background: linear-gradient(45deg, #03a9f4, #b3e5fc);
+    box-shadow: 0 0 15px 5px #03a9f4;
+    animation: ice-glow 1.5s infinite alternate;
+}
+
+.card.lightning .card-front {
+    background: linear-gradient(45deg, #ffc107, #ffeb3b);
+    box-shadow: 0 0 15px 5px #ffc107;
+    animation: lightning-glow 1.5s infinite alternate;
+}
+
+.card.boss .card-front {
+    background: linear-gradient(45deg, #9c27b0, #673ab7);
+    box-shadow: 0 0 15px 5px #9c27b0;
+    animation: boss-glow 1.5s infinite alternate;
+}
+
+@keyframes fire-glow {
+    from { box-shadow: 0 0 10px 2px #ff5722; }
+    to { box-shadow: 0 0 20px 8px #ff5722; }
+}
+
+@keyframes ice-glow {
+    from { box-shadow: 0 0 10px 2px #03a9f4; }
+    to { box-shadow: 0 0 20px 8px #03a9f4; }
+}
+
+@keyframes lightning-glow {
+    from { box-shadow: 0 0 10px 2px #ffc107; }
+    to { box-shadow: 0 0 20px 8px #ffc107; }
+}
+
+@keyframes boss-glow {
+    from { box-shadow: 0 0 10px 2px #9c27b0; }
+    to { box-shadow: 0 0 20px 8px #9c27b0; }
+}
+
+.card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-front {
+    background-color: var(--current-secondary);
+    transform: rotateY(180deg);
+    font-size: 40px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 5px;
+    text-align: center;
+}
+
+.card-front img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+}
+
+.card-back {
+    background-color: var(--current-primary);
+    background-image: url('card-back.png');
+    background-size: cover;
+    background-position: center;
+}
+
+/* Fallback if card-back.png is not available */
+.card-back {
+    background-color: var(--current-primary);
+    background-image: linear-gradient(45deg, var(--current-primary) 25%, var(--current-secondary) 25%, var(--current-secondary) 50%, var(--current-primary) 50%, var(--current-primary) 75%, var(--current-secondary) 75%, var(--current-secondary));
+    background-size: 20px 20px;
+}
+
+.special-cards-info {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+}
+
+.special-card-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.special-icon {
+    font-size: 24px;
+}
+
+.special-desc {
+    font-size: 14px;
+    color: #333;
+}
+
+#story-panel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.story-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+}
+
+.story-content h3 {
+    color: var(--current-primary);
+    margin-bottom: 15px;
+    font-size: 24px;
+}
+
+.story-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.wizard-image {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    background-image: url('images/wizard.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#continue-btn {
+    margin-top: 20px;
+    padding: 10px 30px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Timer warning animation */
+@keyframes timer-warning {
+    0% { color: #333; }
+    50% { color: #f44336; }
+    100% { color: #333; }
+}
+
+.timer-warning {
+    animation: timer-warning 1s infinite;
+}
+
+/* Boss card timer */
+.boss-timer {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-size: 12px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    .card {
+        height: 100px;
+    }
+    
+    .special-cards-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats {
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+    }
+    
+    .card {
+        height: 80px;
+    }
+    
+    .card-front {
+        font-size: 24px;
+    }
+}

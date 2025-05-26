@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Card Flip Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Memory Card Flip Game</h1>
+        
+        <div id="story-panel" class="hidden">
+            <div class="story-content">
+                <h3>The Wizard's Quest</h3>
+                <p id="story-text">Welcome, brave adventurer! I am Wizard Memorius. My magical runes have been scattered across the realms. Help me recover them by matching the pairs!</p>
+                <div class="wizard-image"></div>
+            </div>
+            <button id="continue-btn">Continue</button>
+        </div>
+        
+        <div class="game-header">
+            <div class="stats">
+                <div id="level">Level: 1</div>
+                <div id="moves">0 Moves</div>
+                <div id="timer">Time: 60s</div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <div class="difficulty">
+                <label for="difficulty">Difficulty:</label>
+                <select id="difficulty">
+                    <option value="easy">Easy (4x4)</option>
+                    <option value="medium" selected>Medium (6x6)</option>
+                    <option value="hard">Hard (8x8)</option>
+                </select>
+            </div>
+            
+            <div class="theme-selector">
+                <label for="theme">Theme:</label>
+                <select id="theme">
+                    <option value="forest">Forest</option>
+                    <option value="ice" selected>Ice Cave</option>
+                    <option value="desert">Desert Temple</option>
+                    <option value="tech">Tech Lab</option>
+                </select>
+            </div>
+            
+            <div class="mode-selector">
+                <label for="game-mode">Mode:</label>
+                <select id="game-mode">
+                    <option value="classic">Classic</option>
+                    <option value="story" selected>Story Mode</option>
+                    <option value="timed">Time Challenge</option>
+                </select>
+            </div>
+            
+            <button id="start">Start New Game</button>
+        </div>
+        
+        <div id="game-board"></div>
+        
+        <div class="special-cards-info">
+            <div class="special-card-item">
+                <span class="special-icon">🔥</span>
+                <span class="special-desc">Fire: Burns a wrong pair</span>
+            </div>
+            <div class="special-card-item">
+                <span class="special-icon">🧊</span>
+                <span class="special-desc">Ice: Freezes timer</span>
+            </div>
+            <div class="special-card-item">
+                <span class="special-icon">⚡</span>
+                <span class="special-desc">Lightning: Reveals a row</span>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="background-music" loop>
+        <source src="sounds/background.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="match-sound">
+        <source src="sounds/match.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="wrong-sound">
+        <source src="sounds/wrong.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="special-sound">
+        <source src="sounds/special.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="level-complete">
+        <source src="sounds/level-complete.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script src="script.js"></script>
+</body>
+</html>
